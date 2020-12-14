@@ -14,6 +14,8 @@ class Player {
 
   // Of course we will need a sprite
   Sprite m_Sprite;
+  Sprite flipped;
+  Sprite nonFlipped;
 
   // And a texture
   // Player has been working out and he is now a bit more muscular than before
@@ -30,7 +32,7 @@ class Player {
   // Player's speed in pixels per second
   float m_Speed;
   Vector2f velocity;
-  Vector2f MaxV = Vector2f(1250, 1250);
+  Vector2f MaxV = Vector2f(1250.0, 1250.0);
 
   // Public functions
  public:
@@ -79,7 +81,7 @@ class Player {
 
 Player::Player() {
   // How fast does Player move?
-  m_Speed = 800;
+  m_Speed = 500;
 
   // Associate a texture with the sprite
   m_Texture.loadFromFile("player.png");
@@ -89,6 +91,10 @@ Player::Player() {
   // Set the Player's starting position
   m_Position.x = 500;
   m_Position.y = 500;
+
+  flipped = m_Sprite;
+  nonFlipped = m_Sprite;
+  flipped.scale(-1, 1);
 }
 
 // Make the private spite available to the draw() function
@@ -125,10 +131,12 @@ void Player::update(float elapsedTime) {
   }
 
   if (m_RightPressed) {
+    m_Sprite = flipped;
     m_Position.x += m_Speed * elapsedTime;
   }
 
   if (m_LeftPressed) {
+    m_Sprite = nonFlipped;
     m_Position.x -= m_Speed * elapsedTime;
   }
 
